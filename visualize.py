@@ -42,4 +42,4 @@ for segment in segments:
     save_img_path = os.path.join(result_path,imgname)
     print(save_img_path)
     # plt.show()
-    plt.savefig(save_img_path)  
+    plt.savefig(save_img_path,dpi=600)  
