@@ -12,10 +12,10 @@ from sklearn.utils import shuffle
 
 # 1. 构造数据集
 #事故组  is_crash=1的每一条
-#对照组1 同一路段随机不同时间（0）
-#对照组2 同一时间前一路段 （无论0-1）
-#对照组3 同一时间后一路段 （无论0-1）
-#对照组4 同一条路的不同路段且前后24min=2*12无事故 随机
+#对照组1 同一路段随机不同时间无事故
+#对照组2 同一时间前一路段 
+#对照组3 同一时间后一路段 
+#对照组4 同一条路的不同路段且前后24min无事故 
 
 traffic_data=pd.read_csv(r'update_traffic_data_2.csv')
 data=pd.DataFrame(columns=traffic_data.columns)
@@ -23,10 +23,17 @@ data=pd.DataFrame(columns=traffic_data.columns)
 # print(data.columns)
 # print(traffic_data.columns)
 
-is_crash=traffic_data["is_crash"].values
+
 
 for i in range(0,len(traffic_data)):
     traffic_data["segment"].values[i]=traffic_data["segment"].values[i]%10000
+    if traffic_data["is_crash"].values[i]==1:
+        if i-2>=0:
+            traffic_data["is_crash"].values[i]=1
+        if i-1>=0:
+            traffic_data["is_crash"].values[i]=1
+
+is_crash=traffic_data["is_crash"].values
 
 for i in range(0,len(is_crash)):
     if is_crash[i]==1:
