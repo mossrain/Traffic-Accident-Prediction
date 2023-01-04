@@ -1,4 +1,4 @@
-setwd("E:\\PROGRAM\\R")
+setwd("E:\\PROGRAM\\R\\yjy-logistic")
 library(survival)
 library(tidyverse)
 library(lubridate)
@@ -63,3 +63,5 @@ df_test2$predoct=exp(-0.067617*df_test2$speed1+0.008844*df_test2$flow1)# 根据�
 HH <- roc(df_test2$crash,df_test2$predoct) # 绘制ROC曲线
 plot(HH)
 HH$auc
+plot(HH,print.auc=TRUE, print.ci=TRUE, print.thres=TRUE)
+mean(as.numeric(df_test2$predoct>2.206)==df_test2$crash)
