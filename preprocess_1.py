@@ -1,7 +1,7 @@
 # preprocess_1
 import pandas as pd
-crash_data = pd.read_csv(r'crash_data.csv')
-traffic_data=pd.read_csv(r'traffic_data.csv')
+crash_data = pd.read_csv(r'yjy-logistic/crash_data.csv')
+traffic_data=pd.read_csv(r'yjy-logistic/traffic_data.csv')
 
 def timestamp_to_int(timestamp):
     strs=str(timestamp).split(":")

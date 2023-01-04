@@ -20,14 +20,19 @@ from sklearn.utils import shuffle
 traffic_data=pd.read_csv(r'update_traffic_data_2.csv')
 data=pd.DataFrame(columns=traffic_data.columns)
 
-# print(data.columns)
 # print(traffic_data.columns)
-
-
+# print(traffic_data.columns)
+# traffic_data=traffic_data.drop(columns=['Unnamed: 0.3','Unnamed: 0.2', 'Unnamed: 0.1', 'Unnamed: 0'])
+# traffic_data = (traffic_data-traffic_data.min())/(traffic_data.max()-traffic_data.min())#简单实现标准化
+# print(traffic_data.columns)
 
 for i in range(0,len(traffic_data)):
     traffic_data["segment"].values[i]=traffic_data["segment"].values[i]%10000
     if traffic_data["is_crash"].values[i]==1:
+        if i-4>=0:
+            traffic_data["is_crash"].values[i]=1
+        if i-3>=0:
+            traffic_data["is_crash"].values[i]=1
         if i-2>=0:
             traffic_data["is_crash"].values[i]=1
         if i-1>=0:
