@@ -13,7 +13,7 @@ from sklearn.metrics import confusion_matrix
 
 data=pd.read_csv(r'dataset.csv')
 
-data=data.drop(columns=['Unnamed: 0.2', 'Unnamed: 0.1', 'Unnamed: 0'])
+data=data.drop(columns=['Unnamed: 0.3','Unnamed: 0.2', 'Unnamed: 0.1', 'Unnamed: 0'])
 
 columns = list(data)
 columns.insert(0, columns.pop(columns.index('is_crash')))
