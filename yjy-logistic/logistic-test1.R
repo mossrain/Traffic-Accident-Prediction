@@ -62,6 +62,11 @@ df_test2$predoct=exp(-0.067617*df_test2$speed1+0.008844*df_test2$flow1)# 根据�
 # 6、模型性能-------------
 HH <- roc(df_test2$crash,df_test2$predoct) # 绘制ROC曲线
 plot(HH)
+#计算AUC
 HH$auc
+#计算预测准确度
 plot(HH,print.auc=TRUE, print.ci=TRUE, print.thres=TRUE)
 mean(as.numeric(df_test2$predoct>2.206)==df_test2$crash)
+#混淆矩阵
+table(as.numeric(df_test2$predoct>2.206),df_test2$crash)
+
