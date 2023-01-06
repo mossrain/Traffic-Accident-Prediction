@@ -6,7 +6,7 @@ import seaborn as sns
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_curve, accuracy_score, roc_auc_score, auc
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv('upd_4.csv')
+data = pd.read_csv('../featured_dataset.csv')
 
 x = data.drop(['id', 'segment', 'is_crash'], axis=1)
 y = data['is_crash']

@@ -1,0 +1,78 @@
+---
+title: "step_logistic"
+author: "Chen"
+date: "2023-01-04"
+output: pdf_document
+---
+
+```{r 读dataset}
+setwd("E:\\underreality\\大三上\\统计分析与建模\\期末项目\\github\\TrafficAccidentPrediction\\")
+data = read.csv("r_dataset.csv", header = TRUE)
+data=subset(data,select = -c(X))
+```
+
+```{r 划分数据集}
+set.seed(20220103)# 随机数种子
+index =sort(sample(nrow(data), nrow(data)*.7))
+train = data[index,]
+test= data[-index,]
+```
+
+
+```{r 训练 逻辑回归}
+model<-glm(train$is_crash~.,binomial(link='logit'),data=train)
+summary(model)
+```
+
+```{r 训练 逐步逻辑回归}
+model2=step(object = model,trace=0, maxit = 200)# 增加参数trace=0则不显示过程
+summary(model2)
+```
+
+```{r 绘制拟合的预测点}
+library(ggplot2)
+p<-predict(model,type='response')
+qplot(seq(-500,500,length=length(p)),sort(p),col='predict')
+```
+
+```{r 测试和评估}
+prob=predict(object=model,newdata=test,type = "response")
+pred=ifelse(prob>0.5,1,0)
+pred=factor(pred,levels = c(0,1))
+f=table(test$is_crash,pred)
+f
+tp=f[1]
+fp=f[3]
+fn=f[2]
+tn=f[4]
+precision=tp/(tp+fp)
+recall=tp/(tp+fn)
+f1=2*precision*recall/(precision+recall)
+acc=(tp+tn)/(fp+fn+tp+tn)
+precision
+recall
+f1
+acc
+
+```
+
+```{r 绘制ROC}
+par(mfrow=c(1,2))
+library(ROCR)
+
+plot_roc=function(fit){
+  p=predict(fit,test,type="response")
+  pred=prediction(p,test$is_crash)
+  (auc=performance(pred,"auc")@y.values)
+  plot(performance(pred,"tpr","fpr"),
+       colorize=T,lwd=3,main="ROC曲线")
+  abline(a=0,b=1,lty=2,lwd=3,col="black")
+  return(auc)
+}
+
+plot_roc(model)
+plot_roc(model2)
+```
+
+
+
