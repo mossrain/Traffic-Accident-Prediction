@@ -1,6 +1,6 @@
-logistic_test1.R为原测试模型
-logistic-test1.R是原条件逻辑回归模型
-crash_data,traffix_data是原模型所用数据
+logistic_test1.R为原测试条件逻辑回归模型
+
+crash_data.csv,traffix_data.csv是原模型所用数据
 
 r_dataset.csv是扩充特征后，按事故：非事故1:4对照采样过的数据
 
